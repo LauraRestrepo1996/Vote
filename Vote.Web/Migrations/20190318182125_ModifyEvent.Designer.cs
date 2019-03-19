@@ -10,8 +10,8 @@ using Vote.Web.Data;
 namespace Vote.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190317225324_ModifyEvents")]
-    partial class ModifyEvents
+    [Migration("20190318182125_ModifyEvent")]
+    partial class ModifyEvent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,13 +28,11 @@ namespace Vote.Web.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200);
 
                     b.Property<DateTime>("EndDate");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50);
 
                     b.Property<DateTime>("StartDate");
