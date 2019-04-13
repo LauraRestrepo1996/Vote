@@ -10,15 +10,17 @@ namespace Vote.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
-
+        private readonly ICandidateRepository candidateRepository;
         private readonly IUserHelper userHelper;
 
-        public EventsController(IEventRepository eventRepository, IUserHelper userHelper)
+        public EventsController(IEventRepository eventRepository, IUserHelper userHelper) // ICandidateRepository candidateRepository
         {
             this.eventRepository = eventRepository;
+        //  this.candidateRepository = candidateRepository;
             this.userHelper = userHelper;
         }
 
@@ -28,6 +30,7 @@ namespace Vote.Web.Controllers
             return View(this.eventRepository.GetAll());
         }
 
+       
         // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -51,7 +54,8 @@ namespace Vote.Web.Controllers
             return View();
         }
 
-        // POST: Events/Create
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Event @event)
@@ -67,8 +71,10 @@ namespace Vote.Web.Controllers
             return View(@event);
         }
 
-        // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+
+        
+            // GET: Events/Edit/5
+            public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -139,6 +145,27 @@ namespace Vote.Web.Controllers
             var @event = await this.eventRepository.GetByIdAsync(id);
             await this.eventRepository.DeleteAsync(@event);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult CreateCand()
+        {
+            return View("../Candidates/Create"); //"../Candidates/Create"
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCand(Candidate candidate)
+        {
+
+            if (ModelState.IsValid)
+            {
+                await this.candidateRepository.CreateAsync(candidate);
+                return RedirectToAction();
+                
+            }
+            return View(candidate);
+
+
         }
     }
 
