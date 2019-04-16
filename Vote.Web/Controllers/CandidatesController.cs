@@ -14,17 +14,17 @@ namespace Vote.Web.Controllers
 {
     public class CandidatesController : Controller
     {
-        private readonly DataContext _context;
+        private readonly ICandidateRepository candidateRepository;
 
-        public CandidatesController(DataContext context)
+        public CandidatesController(ICandidateRepository candidateRepository)
         {
-            _context = context;
+            this.candidateRepository = candidateRepository;
         }
 
         // GET: Candidates
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Candidates.ToListAsync());
+            return View(this.candidateRepository.GetAll());
         }
 
         // GET: Candidates/Details/5
@@ -35,8 +35,7 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var candidate = await _context.Candidates
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var candidate = await this.candidateRepository.GetByIdAsync(id.Value);
             if (candidate == null)
             {
                 return NotFound();
@@ -51,12 +50,9 @@ namespace Vote.Web.Controllers
             return View();
         }
 
-        // POST: Candidates/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CandidateViewModel view)
+        public async Task<IActionResult> CreateCandidate(CandidateViewModel view)
         {
             if (ModelState.IsValid)
             {
@@ -64,22 +60,26 @@ namespace Vote.Web.Controllers
 
                 if (view.ImageFile != null && view.ImageFile.Length > 0)
                 {
-                    path = Path.Combine(Directory.GetCurrentDirectory(),
+                    var guid = Guid.NewGuid().ToString();
+                    var file = $"{guid}.jpg";
+
+                    path = Path.Combine(
+                        Directory.GetCurrentDirectory(),
                         "wwwroot\\images\\Candidates",
-                        view.ImageFile.FileName);
+                        file);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                     {
                         await view.ImageFile.CopyToAsync(stream);
                     }
 
-                    path = $"~/images/Candidates/{view.ImageFile.FileName}";
+                    path = $"~/images/Products/{file}";
                 }
 
                 var candidate = this.ToCandidate(view, path);
     
-                _context.Add(candidate);
-                await _context.SaveChangesAsync();
+                //_context.Add(candidate);
+                await this.candidateRepository.CreateAsync(candidate);
                 return RedirectToAction(nameof(Index));
             }
             return View(view);
@@ -107,12 +107,26 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var candidate = await _context.Candidates.FindAsync(id);
+            var candidate = await this.candidateRepository.GetByIdAsync(id.Value);
             if (candidate == null)
             {
                 return NotFound();
             }
-            return View(candidate);
+
+            var view = this.ToCandidateViewModel(candidate);
+            return View(view);
+        }
+
+        private CandidateViewModel ToCandidateViewModel(Candidate candidate)
+        {
+            return new CandidateViewModel
+            {
+                Id = candidate.Id,
+                ImageUrl = candidate.ImageUrl,
+                Name = candidate.Name,
+                Proposal = candidate.Proposal
+            };
+
         }
 
         // POST: Candidates/Edit/5
@@ -120,23 +134,44 @@ namespace Vote.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Candidate candidate)
+        public async Task<IActionResult> Edit(CandidateViewModel view)
         {
-            if (id != candidate.Id)
-            {
-                return NotFound();
-            }
-
+           
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(candidate);
-                    await _context.SaveChangesAsync();
+                    var path = view.ImageUrl;
+                    //var path = string.Empty;
+
+                    if (view.ImageFile != null && view.ImageFile.Length > 0)
+                    {
+                        var guid = Guid.NewGuid().ToString();
+                        var file = $"{guid}.jpg";
+
+                        path = Path.Combine(
+                            Directory.GetCurrentDirectory(),
+                            "wwwroot\\images\\Candidates",
+                            file);
+
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await view.ImageFile.CopyToAsync(stream);
+                        }
+
+                        path = $"~/images/Products/{file}";
+                    }
+
+                    var candidate = this.ToCandidate(view, path);
+
+
+                    await this.candidateRepository.UpdateAsync(candidate);
+                    
+                   // await this.candidateRepository.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CandidateExists(candidate.Id))
+                    if (!await this.candidateRepository.ExistAsync(view.Id))
                     {
                         return NotFound();
                     }
@@ -147,7 +182,7 @@ namespace Vote.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(candidate);
+            return View(view);
         }
 
         // GET: Candidates/Delete/5
@@ -158,8 +193,8 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var candidate = await _context.Candidates
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var candidate = await this.candidateRepository.GetByIdAsync(id.Value);
+                
             if (candidate == null)
             {
                 return NotFound();
@@ -173,15 +208,12 @@ namespace Vote.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var candidate = await _context.Candidates.FindAsync(id);
-            _context.Candidates.Remove(candidate);
-            await _context.SaveChangesAsync();
+            var candidate = await this.candidateRepository.GetByIdAsync(id);
+            await this.candidateRepository.DeleteAsync(candidate);
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CandidateExists(int id)
-        {
-            return _context.Candidates.Any(e => e.Id == id);
-        }
+       
     }
 }

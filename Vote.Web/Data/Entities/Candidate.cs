@@ -18,6 +18,18 @@ namespace Vote.Web.Data.Entities
         [Display(Name = "Image")]
         [Required]
         public string ImageUrl { get; set; }
+
+        public string  ImageFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+                return $"https://votemaritza.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
         
     }
 }

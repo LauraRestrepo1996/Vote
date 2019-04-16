@@ -1,15 +1,14 @@
 ﻿
 namespace Vote.Web.Controllers
 {
-
-
+    using System.IO;
     using System.Threading.Tasks;
     using Data;
     using Data.Entities;
     using Helpers;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-
+    using Vote.Web.Models;
 
     public class EventsController : Controller
     {
@@ -20,7 +19,7 @@ namespace Vote.Web.Controllers
         public EventsController(IEventRepository eventRepository, IUserHelper userHelper) // ICandidateRepository candidateRepository
         {
             this.eventRepository = eventRepository;
-        //  this.candidateRepository = candidateRepository;
+           //this.candidateRepository = candidateRepository;
             this.userHelper = userHelper;
         }
 
@@ -55,7 +54,6 @@ namespace Vote.Web.Controllers
         }
 
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Event @event)
@@ -63,7 +61,7 @@ namespace Vote.Web.Controllers
             if (ModelState.IsValid)
             {
                 // TODO: Pending to change to: this.User.Identity.Name
-                @event.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+                @event.User = await this.userHelper.GetUserByEmailAsync("maritzamunnoz7@gmail.com");
                 await this.eventRepository.CreateAsync(@event);
                 return RedirectToAction(nameof(Index));
             }
@@ -100,7 +98,7 @@ namespace Vote.Web.Controllers
                 try
                 {
                     // TODO: Pending to change to: this.User.Identity.Name
-                   @event.User = await this.userHelper.GetUserByEmailAsync("jzuluaga55@gmail.com");
+                   @event.User = await this.userHelper.GetUserByEmailAsync("maritzamunnoz7@gmail.com");
                     await this.eventRepository.UpdateAsync(@event);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -147,26 +145,60 @@ namespace Vote.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult CreateCand()
+        public IActionResult CreateCandidate()
         {
             return View("../Candidates/Create"); //"../Candidates/Create"
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCand(Candidate candidate)
+        public async Task<IActionResult> CreateCandidate(CandidateViewModel view)
         {
+            var path = string.Empty;
 
-            if (ModelState.IsValid)
-            {
-                await this.candidateRepository.CreateAsync(candidate);
-                return RedirectToAction();
-                
-            }
-            return View(candidate);
+             
+                if (view.ImageFile != null && view.ImageFile.Length > 0)
+                {
+                    
+                    path = Path.Combine(Directory.GetCurrentDirectory(),
+                        "wwwroot\\images\\Candidates",
+                        view.ImageFile.FileName);
 
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await view.ImageFile.CopyToAsync(stream);
+                    }
+
+                    path = $"~/images/Candidates/{view.ImageFile.FileName}";
+                }
+
+                var candidate = this.ToCandidate(view, path);
+
+                //_context.Add(candidate);
+               await this.candidateRepository.CreateAsync(candidate);
+            // await this.candidateRepository.UpdateAsync(candidate);
+            // return RedirectToAction(nameof(Index));
+            return View("../Candidates/Details", candidate);
+            
+                //return View(view);
 
         }
-    }
 
+        private Candidate ToCandidate(CandidateViewModel view, string path)
+        {
+            return new Candidate
+            {
+                Id = view.Id,
+                ImageUrl = path,
+                Name = view.Name,
+                Proposal = view.Proposal
+            };
+        }
+
+        //public IActionResult IndexCandidate()
+        //{
+        //    return View(this.candidateRepository.GetAll());
+        //}
+
+    }
 }

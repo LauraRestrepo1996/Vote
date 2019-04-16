@@ -18,7 +18,7 @@ namespace Vote.Web.Data.API
         [HttpGet]
         public IActionResult GetEvents()
         {
-            return this.Ok(this.eventRepository.GetAll());
+            return this.Ok(this.eventRepository.GetAllWithUsers());
         }
     }
 }

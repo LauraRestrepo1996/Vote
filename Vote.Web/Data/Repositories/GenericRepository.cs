@@ -1,4 +1,4 @@
-﻿
+﻿    
 namespace Vote.Web.Data
 {
     using System.Linq;
