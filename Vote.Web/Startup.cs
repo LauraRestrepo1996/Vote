@@ -30,6 +30,9 @@ namespace Vote.Web
         {
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
+                cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                cfg.SignIn.RequireConfirmedEmail = true;
+
                 cfg.User.RequireUniqueEmail = true;
                 cfg.Password.RequireDigit = false;
                 cfg.Password.RequiredUniqueChars = 0;
@@ -38,6 +41,7 @@ namespace Vote.Web
                 cfg.Password.RequireUppercase = false;
                 cfg.Password.RequiredLength = 6;
             })
+            .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<DataContext>();
 
             services.AddAuthentication()
@@ -65,6 +69,7 @@ namespace Vote.Web
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICandidateRepository, CandidateRepository>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
