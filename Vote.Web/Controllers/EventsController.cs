@@ -6,11 +6,13 @@ namespace Vote.Web.Controllers
     using Data;
     using Data.Entities;
     using Helpers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Vote.Web.Models;
     //using Data.Repositories;
 
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -153,6 +155,7 @@ namespace Vote.Web.Controllers
         /// <returns></returns>
         public IActionResult CreateCandidate()
         {
+            // return this.RedirectToAction("Create", "Candidates");
             return View("../Candidates/Create"); //"../Candidates/Create"
         }
 
@@ -182,12 +185,14 @@ namespace Vote.Web.Controllers
 
                 //_context.Add(candidate);
               await  this.candidateRepository.CreateAsync(candidate);
-            return RedirectToAction(nameof(Index));
+
+           // return RedirectToAction(nameof(Index));
+            return this.RedirectToAction("Index", "Candidates");
             // await this.candidateRepository.UpdateAsync(candidate);
             // return RedirectToAction(nameof(Index));
             //return View("../Candidates/IndexCandidate", candidate);
-            
-                //return View(view);
+
+            //return View(view);
 
         }
 

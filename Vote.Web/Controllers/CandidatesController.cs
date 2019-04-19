@@ -22,7 +22,7 @@ namespace Vote.Web.Controllers
         }
 
         // GET: Candidates
-        public IActionResult IndexCandidate()
+        public IActionResult Index()
         {
             return View(this.candidateRepository.GetAll());
         }
@@ -80,7 +80,7 @@ namespace Vote.Web.Controllers
     
                 //_context.Add(candidate);
                 await this.candidateRepository.CreateAsync(candidate);
-                return RedirectToAction(nameof(IndexCandidate));
+                return RedirectToAction(nameof(Index));
             }
             return View(view);
         }
@@ -180,7 +180,7 @@ namespace Vote.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(IndexCandidate));
+                return RedirectToAction(nameof(Index));
             }
             return View(view);
         }
@@ -211,7 +211,7 @@ namespace Vote.Web.Controllers
             var candidate = await this.candidateRepository.GetByIdAsync(id);
             await this.candidateRepository.DeleteAsync(candidate);
             //await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(IndexCandidate));
+            return RedirectToAction(nameof(Index));
         }
 
        
