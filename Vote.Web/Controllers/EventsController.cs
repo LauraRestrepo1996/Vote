@@ -12,7 +12,6 @@ namespace Vote.Web.Controllers
     using Vote.Web.Models;
     //using Data.Repositories;
 
-    [Authorize]
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -52,6 +51,8 @@ namespace Vote.Web.Controllers
         }
 
         // GET: Events/Create
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create()
         {
             return View();
@@ -74,9 +75,10 @@ namespace Vote.Web.Controllers
         }
 
 
-        
-            // GET: Events/Edit/5
-            public async Task<IActionResult> Edit(int? id)
+
+        // GET: Events/Edit/5
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -123,6 +125,7 @@ namespace Vote.Web.Controllers
         }
 
         // GET: Event/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
