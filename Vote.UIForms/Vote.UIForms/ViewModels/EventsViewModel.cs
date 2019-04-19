@@ -2,10 +2,8 @@
 
 namespace Vote.UIForms.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Text;
     using Vote.Common.Models;
     using Vote.Common.Models.Services;
     using Xamarin.Forms;
@@ -17,14 +15,14 @@ namespace Vote.UIForms.ViewModels
 
         public ObservableCollection<Event> Events
         {
-            get { return this.events; }
-            set { this.SetValue(ref this.events, value); }
+            get => this.events;
+            set => this.SetValue(ref this.events, value);
         }
 
         public bool IsRefreshing
         {
-            get { return this.isRefreshing; }
-            set { this.SetValue(ref this.isRefreshing, value); }
+            get => this.isRefreshing;
+            set => this.SetValue(ref this.isRefreshing, value);
         }
 
         public EventsViewModel()
@@ -37,7 +35,7 @@ namespace Vote.UIForms.ViewModels
         {
             this.IsRefreshing = true;
             var response = await this.apiService.GetListAsync<Event>(
-                "https://voterestrepo.azurewebsites.net",
+                "https://votelaura.azurewebsites.net",
                 "/api",
                 "/Events");
 

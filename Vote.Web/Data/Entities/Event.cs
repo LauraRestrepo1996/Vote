@@ -2,6 +2,7 @@
 namespace Vote.Web.Data.Entities
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Event : IEntity
@@ -18,11 +19,18 @@ namespace Vote.Web.Data.Entities
 
 
         [Display(Name = "Start Date")]
+        [DisplayFormat(DataFormatString ="{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "End Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EndDate { get; set; }
 
         public User User { get; set; }
+
+       // public ICollection<Vote> Votes { get; set; }
+
+       // [Display(Name = "# Votes")]
+        // public int NumberVote { get { return this.Votes == null ? 0 : this.Votes.Count; } }
     }
 }

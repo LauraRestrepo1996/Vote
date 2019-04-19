@@ -64,12 +64,19 @@ namespace Vote.Web
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
             });
 
 
@@ -89,10 +96,12 @@ namespace Vote.Web
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseCookiePolicy();
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.UseMvc(routes =>
             {

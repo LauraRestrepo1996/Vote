@@ -14,17 +14,20 @@ namespace Vote.Web.Controllers
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using Models;
+    using Vote.Web.Data;
     using Vote.Web.Data.Entities;
 
     public class AccountController : Controller
     {
         private readonly IUserHelper userHelper;
         private readonly IConfiguration configuration;
+        private readonly ICountryRepository countryRepository;
 
-        public AccountController(IUserHelper userHelper, IConfiguration configuration)
+        public AccountController(IUserHelper userHelper, IConfiguration configuration, ICountryRepository countryRepository)
         {
             this.userHelper = userHelper;
             this.configuration = configuration;
+            this.countryRepository = countryRepository;
         }
 
         public IActionResult Login()
@@ -67,7 +70,15 @@ namespace Vote.Web.Controllers
 
         public IActionResult Register()
         {
-            return this.View();
+
+            var model = new RegisterNewUserViewModel
+            {
+                Countries = this.countryRepository.GetComboCountries(),
+                Cities = this.countryRepository.GetComboCities(0)
+            };
+
+            return this.View(model);
+
         }
 
         [HttpPost]
@@ -78,12 +89,21 @@ namespace Vote.Web.Controllers
                 var user = await this.userHelper.GetUserByEmailAsync(model.Username);
                 if (user == null)
                 {
+                    var city = await this.countryRepository.GetCityAsync(model.CityId);
                     user = new User
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Email = model.Username,
-                        UserName = model.Username
+                        UserName = model.Username,
+                        PhoneNumber = model.PhoneNumber,
+                        CityId = model.CityId,
+                        City = city,
+                        Ocupattion = model.Occupation,
+                        Gender = model.Gender,
+                        Stratum = model.Stratum,
+                        Birthdate = model.Birthdate
+
                     };
 
                     var result = await this.userHelper.AddUserAsync(user, model.Password);
@@ -122,12 +142,33 @@ namespace Vote.Web.Controllers
         {
             var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
             var model = new ChangeUserViewModel();
+
             if (user != null)
             {
                 model.FirstName = user.FirstName;
                 model.LastName = user.LastName;
+                model.Occupation = user.Ocupattion;
+                model.Stratum = user.Stratum;
+                model.Gender = user.Gender;
+                model.Birthdate = user.Birthdate;
+                model.PhoneNumber = user.PhoneNumber;
+
+                var city = await this.countryRepository.GetCityAsync(user.CityId);
+                if (city != null)
+                {
+                    var country = await this.countryRepository.GetCountryAsync(city);
+                    if (country != null)
+                    {
+                        model.CountryId = country.Id;
+                        model.Cities = this.countryRepository.GetComboCities(country.Id);
+                        model.Countries = this.countryRepository.GetComboCountries();
+                        model.CityId = user.CityId;
+                    }
+                }
             }
 
+            model.Cities = this.countryRepository.GetComboCities(model.CountryId);
+            model.Countries = this.countryRepository.GetComboCountries();
             return this.View(model);
         }
 
@@ -139,8 +180,18 @@ namespace Vote.Web.Controllers
                 var user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 if (user != null)
                 {
+                    var city = await this.countryRepository.GetCityAsync(model.CityId);
+
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
+                    model.Occupation = user.Ocupattion;
+                    model.Stratum = user.Stratum;
+                    model.Gender = user.Gender;
+                    model.Birthdate = user.Birthdate;
+                    model.PhoneNumber = user.PhoneNumber;
+                    user.CityId = model.CityId;
+                    user.City = city;
+
                     var respose = await this.userHelper.UpdateUserAsync(user);
                     if (respose.Succeeded)
                     {
@@ -234,6 +285,18 @@ namespace Vote.Web.Controllers
             }
 
             return this.BadRequest(); // Respuesta 400, el usuario no existe... user o password incorrect
+        }
+
+
+        public IActionResult NotAuthorized()
+        {
+            return this.View();
+        }
+
+        public async Task<JsonResult> GetCitiesAsync(int countryId)
+        {
+            var country = await this.countryRepository.GetCountryWithCitiesAsync(countryId);
+            return this.Json(country.Cities.OrderBy(c => c.Name));
         }
 
     }

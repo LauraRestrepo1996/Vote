@@ -38,13 +38,13 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
             }
 
             var @event = await this.eventRepository.GetByIdAsync(id.Value);
             if (@event == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
             }
 
             return View(@event);
@@ -82,13 +82,14 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             var @event = await this.eventRepository.GetByIdAsync(id.Value);
             if (@event == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
             }
 
             return View(@event);
@@ -111,7 +112,7 @@ namespace Vote.Web.Controllers
                 {
                     if (!await this.eventRepository.ExistAsync(@event.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("EventNotFound");
                     }
                     else
                     {
@@ -130,13 +131,13 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
             }
 
             var @event = await this.eventRepository.GetByIdAsync(id.Value);
             if (@event == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
             }
 
             return View(@event);
@@ -214,6 +215,12 @@ namespace Vote.Web.Controllers
         {
             return View(this.candidateRepository.GetAll());
         }
+
+        public IActionResult EventNotFound()
+        {
+            return this.View();
+        }
+
 
     }
 }
