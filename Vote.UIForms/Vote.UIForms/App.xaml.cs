@@ -1,4 +1,5 @@
 ﻿using System;
+using Vote.UIForms.ViewModels;
 using Vote.UIForms.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,8 +12,9 @@ namespace Vote.UIForms
         public App()
         {
             InitializeComponent();
+            MainViewModel.GetInstance().Login = new LoginViewModel();
+            this.MainPage = new NavigationPage(new LoginPage());
 
-            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

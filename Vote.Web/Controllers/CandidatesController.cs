@@ -22,7 +22,7 @@ namespace Vote.Web.Controllers
         }
 
         // GET: Candidates
-        public IActionResult Index()
+        public IActionResult IndexCandidate()
         {
             return View(this.candidateRepository.GetAll());
         }
@@ -73,14 +73,14 @@ namespace Vote.Web.Controllers
                         await view.ImageFile.CopyToAsync(stream);
                     }
 
-                    path = $"~/images/Products/{file}";
+                    path = $"~/images/Candidates/{file}";
                 }
 
                 var candidate = this.ToCandidate(view, path);
     
                 //_context.Add(candidate);
                 await this.candidateRepository.CreateAsync(candidate);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexCandidate));
             }
             return View(view);
         }
@@ -180,7 +180,7 @@ namespace Vote.Web.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(IndexCandidate));
             }
             return View(view);
         }
@@ -211,7 +211,7 @@ namespace Vote.Web.Controllers
             var candidate = await this.candidateRepository.GetByIdAsync(id);
             await this.candidateRepository.DeleteAsync(candidate);
             //await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(IndexCandidate));
         }
 
        

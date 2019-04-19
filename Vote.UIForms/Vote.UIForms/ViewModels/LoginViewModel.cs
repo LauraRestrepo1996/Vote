@@ -12,14 +12,13 @@ namespace Vote.UIForms.ViewModels
 
     public class LoginViewModel
     {
-        
-
        
         public string Email { get; set; }
 
         public string Password { get; set; }
 
         public ICommand LoginCommand => new RelayCommand(Login);
+
 
         public LoginViewModel()
         {
@@ -58,10 +57,13 @@ namespace Vote.UIForms.ViewModels
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert(
-                    "OK",
-                    "To welcome system Voting",
-                    "Accept");
+            //await Application.Current.MainPage.DisplayAlert(
+            //        "OK",
+            //        "To welcome system Voting",
+            //        "Accept");
+
+            await Application.Current.MainPage.Navigation.PushAsync(new EventsPage());
+            MainViewModel.GetInstance().Events = new EventsViewModel();
         }
     }
 }

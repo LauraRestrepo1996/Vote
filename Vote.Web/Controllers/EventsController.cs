@@ -9,12 +9,14 @@ namespace Vote.Web.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Vote.Web.Models;
+    //using Data.Repositories;
 
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
-        private readonly ICandidateRepository candidateRepository;
+       private readonly ICandidateRepository candidateRepository;
         private readonly IUserHelper userHelper;
+  
 
         public EventsController(IEventRepository eventRepository, IUserHelper userHelper) // ICandidateRepository candidateRepository
         {
@@ -145,6 +147,10 @@ namespace Vote.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult CreateCandidate()
         {
             return View("../Candidates/Create"); //"../Candidates/Create"
@@ -175,10 +181,11 @@ namespace Vote.Web.Controllers
                 var candidate = this.ToCandidate(view, path);
 
                 //_context.Add(candidate);
-               await this.candidateRepository.CreateAsync(candidate);
+              await  this.candidateRepository.CreateAsync(candidate);
+            return RedirectToAction(nameof(Index));
             // await this.candidateRepository.UpdateAsync(candidate);
             // return RedirectToAction(nameof(Index));
-            return View("../Candidates/Details", candidate);
+            //return View("../Candidates/IndexCandidate", candidate);
             
                 //return View(view);
 
@@ -195,10 +202,10 @@ namespace Vote.Web.Controllers
             };
         }
 
-        //public IActionResult IndexCandidate()
-        //{
-        //    return View(this.candidateRepository.GetAll());
-        //}
+        public IActionResult IndexCandidate()
+        {
+            return View(this.candidateRepository.GetAll());
+        }
 
     }
 }

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vote.UIForms.Views.EventsPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+         	 Title="Events">
+
+    <ContentPage.Content>
+
+        <StackLayout
+			BindingContext="{Binding Events}"
+			Padding = "10">
+
+            <ListView
+                IsRefreshing = "{Binding IsRefreshing}"
+				HasUnevenRows="True"
+            	ItemsSource="{Binding Events}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                               
+                                <StackLayout
+                                	Grid.Column="0"
+                                	VerticalOptions="Center">
+                                    <Label
+                                    	FontAttributes="Bold"
+                                    	FontSize="Medium"
+                                    	Text="{Binding Name}"
+                                    	TextColor="Black">
+                                    </Label>
+                                    <Label
+                                    	Text="{Binding Description}"
+                                    	TextColor="Navy">
+                                    </Label>
+                                    <Label
+                                    	Text="{Binding StartDate, StringFormat='Start Date'}"
+                                    	TextColor="Black">
+                                    </Label>
+                                    <Label
+                                    	Text="{Binding EndDate, StringFormat='End Date'}"
+                                    	TextColor="Black">
+                                    </Label>
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>
