@@ -64,8 +64,8 @@ namespace Vote.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: Pending to change to: this.User.Identity.Name
-                @event.User = await this.userHelper.GetUserByEmailAsync("maritzamunnoz7@gmail.com");
+              
+                @event.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await this.eventRepository.CreateAsync(@event);
                 return RedirectToAction(nameof(Index));
             }
@@ -101,8 +101,8 @@ namespace Vote.Web.Controllers
             {
                 try
                 {
-                    // TODO: Pending to change to: this.User.Identity.Name
-                   @event.User = await this.userHelper.GetUserByEmailAsync("maritzamunnoz7@gmail.com");
+                    
+                   @event.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                     await this.eventRepository.UpdateAsync(@event);
                 }
                 catch (DbUpdateConcurrencyException)

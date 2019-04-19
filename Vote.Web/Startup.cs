@@ -14,6 +14,7 @@ namespace Vote.Web
     using Data.Entities;
     using Helpers;
 
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -41,6 +42,7 @@ namespace Vote.Web
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+                
             });
 
             services.AddTransient<SeedDb>();
