@@ -34,10 +34,15 @@ namespace Vote.UIForms.ViewModels
         private async void LoadEvents()
         {
             this.IsRefreshing = true;
+
+            var url = Application.Current.Resources["UrlAPI"].ToString();
             var response = await this.apiService.GetListAsync<Event>(
-                "https://votelaura.azurewebsites.net",
+                url,
                 "/api",
-                "/Events");
+                "/Events",
+                "bearer",
+                MainViewModel.GetInstance().Token.Token);
+
 
             this.IsRefreshing = false;
 
@@ -50,8 +55,8 @@ namespace Vote.UIForms.ViewModels
                 return;
             }
 
-            var events = (List<Event>)response.Result;
-            this.events = new ObservableCollection<Event>(events);
+            var myEvents = (List<Event>)response.Result;
+            this.events = new ObservableCollection<Event>(myEvents);
         }
     }
 }

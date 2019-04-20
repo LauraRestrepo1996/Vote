@@ -9,10 +9,28 @@ namespace Vote.UIForms.ViewModels
     using System;
     using System.Windows.Input;
     using Xamarin.Forms;
+    using Vote.Common.Models.Services;
+    using Vote.Common.Models;
 
-    public class LoginViewModel
+    public class LoginViewModel : BaseViewModel
     {
-       
+        private bool isRunning;
+        private bool isEnabled;
+        private ApiService apiService;
+
+        public bool IsRunning
+        {
+            get => this.isRunning;
+            set => this.SetValue(ref this.isRunning, value);
+        }
+
+        public bool IsEnabled
+        {
+            get => this.isEnabled;
+            set => this.SetValue(ref this.isEnabled, value);
+        }
+
+
         public string Email { get; set; }
 
         public string Password { get; set; }
@@ -22,10 +40,10 @@ namespace Vote.UIForms.ViewModels
 
         public LoginViewModel()
         {
-            //this.apiService = new ApiService();
+            this.apiService = new ApiService();
             this.Email = "maritzamunnoz7@gmail.com";
             this.Password = "123456";
-            //this.IsEnabled = true;
+            this.IsEnabled = true;
         }
 
         private async void Login()
@@ -48,22 +66,39 @@ namespace Vote.UIForms.ViewModels
                 return;
             }
 
-            if (!Email.Equals("maritzamunnoz7@gmail.com") || !this.Password.Equals("123456"))
+            this.IsRunning = true;
+            this.IsEnabled = false;
+
+            var request = new TokenRequest
             {
-                await Application.Current.MainPage.DisplayAlert(
-                   "Error",
-                   "User or password wrong.",
-                   "Accept");
+                Password = this.Password,
+                Username = this.Email
+            };
+
+            var url = Application.Current.Resources["UrlAPI"].ToString();
+            var response = await this.apiService.GetTokenAsync(
+                url,
+                "/Account",
+                "/CreateToken",
+                request);
+
+            this.IsRunning = false;
+            this.IsEnabled = true;
+
+            if (!response.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error",
+                    "Email or password incorrect.",
+                     "Accept");
                 return;
             }
 
-            //await Application.Current.MainPage.DisplayAlert(
-            //        "OK",
-            //        "To welcome system Voting",
-            //        "Accept");
-
+            var token = (TokenResponse)response.Result;
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Token = token;
+            mainViewModel.Events = new EventsViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new EventsPage());
-            MainViewModel.GetInstance().Events = new EventsViewModel();
+
         }
     }
 }

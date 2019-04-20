@@ -26,6 +26,7 @@
                 <Label
                     Text="Password">
                 </Label>
+
                 <Entry
                     IsPassword="True"
                     Placeholder="Enter your Password here..."
@@ -37,17 +38,18 @@
                     VerticalOptions="CenterAndExpand">
                 </ActivityIndicator>
 
+
                 <Button
                 	BackgroundColor="Navy"
                 	BorderRadius="23"
                 	Command="{Binding LoginCommand}"
-                	HeightRequest="46"
+                    HeightRequest="46"
                 	IsEnabled="{Binding IsEnabled}"
                 	Text="Login"
                 	TextColor="White">
                 </Button>
             </StackLayout>
         </ScrollView>
-       
+
     </ContentPage.Content>
 </ContentPage>

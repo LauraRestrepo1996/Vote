@@ -34,20 +34,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
-                    @if (this.User.Identity.IsAuthenticated)
+                    @if (this.User.IsInRole("Admin"))
                     {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li><a asp-area="" asp-controller="Events" asp-action="Index">Events</a></li>
+                        <li><a asp-area="" asp-controller="Countries" asp-action="Index">Countries</a></li>
+                        <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>
 
-                        @if (this.User.IsInRole("Admin"))
-                        {
-                            <li><a asp-area="" asp-controller="Countries" asp-action="Index">Countries</a></li>
-                            <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>
-                        }
                     }
-
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

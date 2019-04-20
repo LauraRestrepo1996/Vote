@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Vote.Common.Models;
 
 namespace Vote.UIForms.ViewModels
 {
@@ -10,6 +11,8 @@ namespace Vote.UIForms.ViewModels
         public EventsViewModel Events { get; set; }
 
         private static MainViewModel instance; // Apuntador
+
+        public TokenResponse Token { get; set; }
         public MainViewModel()
         {
             instance = this;
