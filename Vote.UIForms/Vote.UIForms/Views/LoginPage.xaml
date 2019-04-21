@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i18n="clr-namespace:Vote.UIForms.Helpers"
              x:Class="Vote.UIForms.Views.LoginPage"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="Login">
+             Title="{i18n:Translate Login}">
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding Login}">
@@ -15,11 +16,11 @@
                 </Image>
 
                 <Label
-                    Text="Email">
+                    Text="{i18n:Translate Email}">
                 </Label>
                 <Entry
-                    Keyboard="Email"
-                    Placeholder="Enter your Email here..."
+                    Keyboard="{i18n:Translate Email}"
+                    Placeholder="{i18n:Translate EmailEnter}"
                     Text="{Binding Email}">
 
                 </Entry>
@@ -29,10 +30,23 @@
 
                 <Entry
                     IsPassword="True"
-                    Placeholder="Enter your Password here..."
+                    Placeholder="{i18n:Translate PasswordEnter}"
                     Text="{Binding Password}">
 
                 </Entry>
+
+                <StackLayout
+	                HorizontalOptions="Center"
+	                Orientation="Horizontal">   
+                    <Label
+    	            Text="{i18n:Translate Remember}"
+    	            VerticalOptions="Center">
+                    </Label>
+                    <Switch
+    	            IsToggled="{Binding IsRemember}">
+                    </Switch>
+                </StackLayout>
+
                 <ActivityIndicator
                 	IsRunning="{Binding IsRunning}"
                     VerticalOptions="CenterAndExpand">
@@ -45,7 +59,7 @@
                 	Command="{Binding LoginCommand}"
                     HeightRequest="46"
                 	IsEnabled="{Binding IsEnabled}"
-                	Text="Login"
+                	Text="{i18n:Translate Login}"
                 	TextColor="White">
                 </Button>
             </StackLayout>

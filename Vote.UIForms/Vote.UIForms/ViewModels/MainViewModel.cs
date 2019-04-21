@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Vote.Common.Models;
-
-namespace Vote.UIForms.ViewModels
+﻿namespace Vote.UIForms.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using Vote.Common.Models;
+
     public class MainViewModel
     {
         public LoginViewModel Login { get; set; }
         public EventsViewModel Events { get; set; }
-
-        private static MainViewModel instance; // Apuntador
-
+        private static MainViewModel instance;
         public TokenResponse Token { get; set; }
+
+        public string UserEmail { get; set; }
+
+        public string UserPassword { get; set; }
+    public ObservableCollection<MenuItemViewModel> Menus { get; set; }
         public MainViewModel()
         {
             instance = this;
+            this.LoadMenus();
         }
 
         public static MainViewModel GetInstance()
@@ -26,5 +30,42 @@ namespace Vote.UIForms.ViewModels
             }
             return instance;
         }
+
+        private void LoadMenus()
+        {
+            var menus = new List<Menu>
+    {
+        new Menu
+        {
+            Icon = "ic_info",
+            PageName = "AboutPage",
+            Title = "About"
+        },
+
+        new Menu
+        {
+            Icon = "ic_phonelink_setup",
+            PageName = "SetupPage",
+            Title = "Setup"
+        },
+
+        new Menu
+        {
+            Icon = "ic_exit_to_app",
+            PageName = "LoginPage",
+            Title = "Close session"
+        }
+    };
+
+            this.Menus = new ObservableCollection<MenuItemViewModel>(menus.Select(m => new MenuItemViewModel
+            {
+                Icon = m.Icon,
+                PageName = m.PageName,
+                Title = m.Title
+            }).ToList());
+        }
+
     }
 }
+
+

@@ -3,20 +3,22 @@
 namespace Vote.UIForms.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
-   // using Vote.Common.Models;
-   // using Shop.Common.Services;
-    using Vote.UIForms.Views;
-    using System;
+    using Newtonsoft.Json;
     using System.Windows.Input;
-    using Xamarin.Forms;
-    using Vote.Common.Models.Services;
+    using Vote.Common.Helpers;
     using Vote.Common.Models;
+    using Vote.Common.Models.Services;
+    using Vote.UIForms.Helpers;
+    using Vote.UIForms.Views;
+    using Xamarin.Forms;
 
     public class LoginViewModel : BaseViewModel
     {
         private bool isRunning;
         private bool isEnabled;
-        private ApiService apiService;
+        private readonly ApiService apiService;
+        public bool IsRemember { get; set; }
+
 
         public bool IsRunning
         {
@@ -37,35 +39,35 @@ namespace Vote.UIForms.ViewModels
 
         public ICommand LoginCommand => new RelayCommand(Login);
 
+        public bool IsToggled { get; private set; }
 
         public LoginViewModel()
         {
             this.apiService = new ApiService();
-            this.Email = "maritzamunnoz7@gmail.com";
-            this.Password = "123456";
             this.IsEnabled = true;
+            this.IsRemember = true;
         }
-
         private async void Login()
         {
-            if(string.IsNullOrEmpty(this.Email))
+            if (string.IsNullOrEmpty(this.Email))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Your must enter an Email",
-                    "Accept");
+                    Languages.Error,
+                    Languages.EmailError,
+                    Languages.Accept
+                    );
+
                 return;
             }
-
             if (string.IsNullOrEmpty(this.Password))
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "Error",
-                    "Your must enter an Password",
-                    "Accept");
+                    Languages.Error,
+                    Languages.PasswordError,
+                    Languages.Accept);
+
                 return;
             }
-
             this.IsRunning = true;
             this.IsEnabled = false;
 
@@ -87,9 +89,9 @@ namespace Vote.UIForms.ViewModels
 
             if (!response.IsSuccess)
             {
-                await Application.Current.MainPage.DisplayAlert("Error",
-                    "Email or password incorrect.",
-                     "Accept");
+                await Application.Current.MainPage.DisplayAlert(Languages.Error,
+                    Languages.EmPasError,
+                    Languages.Accept);
                 return;
             }
 
@@ -97,8 +99,20 @@ namespace Vote.UIForms.ViewModels
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = token;
             mainViewModel.Events = new EventsViewModel();
-            await Application.Current.MainPage.Navigation.PushAsync(new EventsPage());
+            mainViewModel.UserEmail = this.Email;
+            mainViewModel.UserPassword = this.Password;
+
+
+            Settings.IsRemember = this.IsToggled;
+            Settings.UserEmail = this.Email;
+            Settings.UserPassword = this.Password;
+            Settings.Token = JsonConvert.SerializeObject(token);
+
+            Application.Current.MainPage = new MasterPage();
+
 
         }
     }
 }
+
+

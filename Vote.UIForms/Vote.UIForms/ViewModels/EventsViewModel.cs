@@ -60,3 +60,4 @@ namespace Vote.UIForms.ViewModels
         }
     }
 }
+
