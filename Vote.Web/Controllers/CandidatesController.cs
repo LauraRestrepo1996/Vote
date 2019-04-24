@@ -52,7 +52,7 @@ namespace Vote.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateCandidate(CandidateViewModel view)
+        public async Task<IActionResult> Create(CandidateViewModel view)
         {
             if (ModelState.IsValid)
             {

@@ -9,6 +9,7 @@ namespace Vote.Web.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using Helpers;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -455,6 +456,8 @@ namespace Vote.Web.Controllers
             return this.RedirectToAction(nameof(Index));
         }
 
+
+      
 
     }
 

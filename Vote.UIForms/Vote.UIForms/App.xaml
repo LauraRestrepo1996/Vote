@@ -10,7 +10,7 @@
             <infra:InstanceLocator x:Key="Locator"/>
 
             <!-- Parameters -->
-            <x:String x:Key="UrlAPI">https://votelaura.azurewebsites.net</x:String>
+            <x:String x:Key="UrlAPI">https://votemunnoz.azurewebsites.net</x:String>
 
         </ResourceDictionary>
     </Application.Resources>

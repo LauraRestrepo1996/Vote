@@ -1,6 +1,7 @@
 ﻿
 namespace Vote.Web.Controllers
 {
+    using System;
     using System.IO;
     using System.Threading.Tasks;
     using Data;
@@ -11,7 +12,7 @@ namespace Vote.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using Vote.Web.Models;
     //using Data.Repositories;
-
+   
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -19,7 +20,7 @@ namespace Vote.Web.Controllers
         private readonly IUserHelper userHelper;
   
 
-        public EventsController(IEventRepository eventRepository, IUserHelper userHelper) // ICandidateRepository candidateRepository
+        public EventsController(IEventRepository eventRepository, IUserHelper userHelper) //, ICandidateRepository candidateRepository
         {
             this.eventRepository = eventRepository;
            //this.candidateRepository = candidateRepository;
@@ -159,8 +160,8 @@ namespace Vote.Web.Controllers
         /// <returns></returns>
         public IActionResult CreateCandidate()
         {
-            // return this.RedirectToAction("Create", "Candidates");
-            return View("../Candidates/Create"); //"../Candidates/Create"
+             return this.RedirectToAction("Create", "Candidates");
+            //return View(); //"../Candidates/Create"
         }
 
         [HttpPost]
@@ -169,36 +170,70 @@ namespace Vote.Web.Controllers
         {
             var path = string.Empty;
 
-             
-                if (view.ImageFile != null && view.ImageFile.Length > 0)
+
+            if (view.ImageFile != null && view.ImageFile.Length > 0)
+            {
+
+                path = Path.Combine(Directory.GetCurrentDirectory(),
+                    "wwwroot\\images\\Candidates",
+                    view.ImageFile.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    
-                    path = Path.Combine(Directory.GetCurrentDirectory(),
-                        "wwwroot\\images\\Candidates",
-                        view.ImageFile.FileName);
-
-                    using (var stream = new FileStream(path, FileMode.Create))
-                    {
-                        await view.ImageFile.CopyToAsync(stream);
-                    }
-
-                    path = $"~/images/Candidates/{view.ImageFile.FileName}";
+                    await view.ImageFile.CopyToAsync(stream);
                 }
 
-                var candidate = this.ToCandidate(view, path);
+                path = $"~/images/Candidates/{view.ImageFile.FileName}";
+            }
 
-                //_context.Add(candidate);
-              await  this.candidateRepository.CreateAsync(candidate);
+            var candidate = this.ToCandidate(view, path);
 
-           // return RedirectToAction(nameof(Index));
-            return this.RedirectToAction("Index", "Candidates");
-            // await this.candidateRepository.UpdateAsync(candidate);
+            //_context.Add(candidate);
+            await this.candidateRepository.CreateAsync(candidate);
+
             // return RedirectToAction(nameof(Index));
-            //return View("../Candidates/IndexCandidate", candidate);
+            //return this.RedirectToAction("Index", "Candidates");
+            // await this.candidateRepository.UpdateAsync(candidate);
+             return RedirectToAction(nameof(IndexCandidate));
+
+            //return View("../Candidates/Create");
 
             //return View(view);
 
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> CreateCandidate(CandidateViewModel view)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var path = string.Empty;
+
+
+        //        if (view.ImageFile != null && view.ImageFile.Length > 0)
+        //        {
+
+        //            path = Path.Combine(Directory.GetCurrentDirectory(),
+        //                "wwwroot\\images\\Candidates",
+        //                view.ImageFile.FileName);
+
+        //            using (var stream = new FileStream(path, FileMode.Create))
+        //            {
+        //                await view.ImageFile.CopyToAsync(stream);
+        //            }
+
+        //            path = $"~/images/Candidates/{view.ImageFile.FileName}";
+        //        }
+
+        //        var candidate = this.ToCandidate(view, path);
+
+        //        //_context.Add(candidate);
+        //        await this.candidateRepository.CreateAsync(candidate);
+        //        return RedirectToAction(nameof(IndexCandidate));
+        //    }
+        //    return View(view);
+        //}
 
         private Candidate ToCandidate(CandidateViewModel view, string path)
         {
@@ -208,6 +243,8 @@ namespace Vote.Web.Controllers
                 ImageUrl = path,
                 Name = view.Name,
                 Proposal = view.Proposal
+
+
             };
         }
 

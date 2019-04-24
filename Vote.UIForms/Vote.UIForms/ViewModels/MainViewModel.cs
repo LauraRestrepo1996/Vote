@@ -7,15 +7,22 @@
 
     public class MainViewModel
     {
+        public ChangePasswordViewModel ChangePassword { get; set; }
+
+        public ProfileViewModel Profile { get; set; }
+        public User User { get; set; }
+        public RememberPasswordViewModel RememberPassword { get; set; }
+        public RegisterViewModel Register { get; set; }
         public LoginViewModel Login { get; set; }
         public EventsViewModel Events { get; set; }
         private static MainViewModel instance;
         public TokenResponse Token { get; set; }
+        public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
         public string UserEmail { get; set; }
-
         public string UserPassword { get; set; }
-    public ObservableCollection<MenuItemViewModel> Menus { get; set; }
+
+
         public MainViewModel()
         {
             instance = this;
@@ -40,6 +47,12 @@
             Icon = "ic_info",
             PageName = "AboutPage",
             Title = "About"
+        },
+        new Menu
+        {
+            Icon = "ic_person_outline",
+            PageName = "ProfilePage",
+            Title = "Modify User"
         },
 
         new Menu

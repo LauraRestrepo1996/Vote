@@ -150,4 +150,145 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register New User!</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last name</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>One of the country must be selected</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="SelectCity" xml:space="preserve">
+    <value>Seleccione um concelho</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>新密码确认</value>
+  </data>
+  <data name="PasswordEnterConf" xml:space="preserve">
+    <value>Enter your password confirm!</value>
+  </data>
+  <data name="Birthdate" xml:space="preserve">
+    <value>Birthdate</value>
+  </data>
+  <data name="BirthdateEnter" xml:space="preserve">
+    <value>Enter your Birthdate!</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="GenderEnter" xml:space="preserve">
+    <value>Enter your Gender!</value>
+  </data>
+  <data name="Stratum" xml:space="preserve">
+    <value>Stratum!</value>
+  </data>
+  <data name="StratumEnter" xml:space="preserve">
+    <value>Enter your Stratum!</value>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>Occupation</value>
+  </data>
+  <data name="OccupationEnter" xml:space="preserve">
+    <value>Enter your Occupation!</value>
+  </data>
+  <data name="FirstNameEnter" xml:space="preserve">
+    <value>Você deve digitar o seu primeiro nome</value>
+  </data>
+  <data name="LastNameEnter" xml:space="preserve">
+    <value>Enter your first last!</value>
+  </data>
+  <data name="Telephone" xml:space="preserve">
+    <value>Telephone</value>
+  </data>
+  <data name="TelephoneEnter" xml:space="preserve">
+    <value>sila masukkan nombor telefon anda</value>
+  </data>
+  <data name="Country1" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Ocupattion" xml:space="preserve">
+    <value>Ocupattion!</value>
+  </data>
+  <data name="OcupattionEnter" xml:space="preserve">
+    <value>Enter your Ocupattion!</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PasswordMin" xml:space="preserve">
+    <value>You password must be at mimimun 6 characters!</value>
+  </data>
+  <data name="PasswordMatch" xml:space="preserve">
+    <value>The password and the confirm do not match!</value>
+  </data>
+  <data name="RecoverPassword" xml:space="preserve">
+    <value>Recover Password</value>
+  </data>
+  <data name="EmailRecoverPassword" xml:space="preserve">
+    <value>Enter email to recover the password!</value>
+  </data>
+  <data name="EmailValid" xml:space="preserve">
+    <value>Insira um email válido</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Esqueci minha senha</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="EnterCurrentPassword" xml:space="preserve">
+    <value>BACKEND_CHANGE_PWD_PAGE.PLHR.ENTER_CURRENT_PWD</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="EnterNewPassword" xml:space="preserve">
+    <value>Enter the new password</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="RenterPassword" xml:space="preserve">
+    <value>Renter the new password!</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="ModifyUser" xml:space="preserve">
+    <value>Aggiorna Profilo</value>
+  </data>
+  <data name="ModifyPassword" xml:space="preserve">
+    <value>修改密码</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="PhoneEnter" xml:space="preserve">
+    <value>sila masukkan nombor telefon anda</value>
+  </data>
+  <data name="Registered" xml:space="preserve">
+    <value>This email is already being used.</value>
+  </data>
+  <data name="ConfirmApp" xml:space="preserve">
+    <value>A Confirmation email was sent. Plese confirm your account and log into the App!</value>
+  </data>
 </root>

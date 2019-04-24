@@ -44,6 +44,13 @@
                         <li><a asp-area="" asp-controller="Account" asp-action="Index">Users</a></li>
 
                     }
+                    else
+                    {
+                        if (!this.User.IsInRole("Admin"))
+                        {
+                            <li><a asp-area="" asp-controller="Events" asp-action="EventNotFound">Events</a></li>
+                        }
+                    }
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

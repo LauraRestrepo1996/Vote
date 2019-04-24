@@ -210,4 +210,9 @@
     <None Include="wwwroot\node_modules\bootstrap-datepicker\README.md" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Vote.Common\Vote.Common.csproj" />
+    <ProjectReference Include="..\Vote.UIForms\Vote.UIForms\Vote.UIForms.csproj" />
+  </ItemGroup>
+
 </Project>
