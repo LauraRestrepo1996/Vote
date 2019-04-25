@@ -3,8 +3,10 @@
 namespace Vote.Web.Data
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Entities;
     using Microsoft.EntityFrameworkCore;
+ 
 
     public class EventRepository : GenericRepository<Event>, IEventRepository
     {

@@ -28,9 +28,9 @@ namespace Vote.Web.Data.Entities
 
         public User User { get; set; }
 
-       // public ICollection<Vote> Votes { get; set; }
+        public ICollection<Vote> Votes { get; set; }
 
-       // [Display(Name = "# Votes")]
-        // public int NumberVote { get { return this.Votes == null ? 0 : this.Votes.Count; } }
+        [Display(Name = "# Votes")]
+        public int NumberVote { get { return this.Votes == null ? 0 : this.Votes.Count; } }
     }
 }

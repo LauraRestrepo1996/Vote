@@ -5,11 +5,13 @@ namespace Vote.UIForms.ViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Vote.Common.Models;
+    using System.Linq;
     using Vote.Common.Models.Services;
     using Xamarin.Forms;
     public class EventsViewModel : BaseViewModel
     {
         private ApiService apiService;
+        private List<Event> myEvents;
         private ObservableCollection<Event> events;
         private bool isRefreshing;
 
@@ -55,9 +57,40 @@ namespace Vote.UIForms.ViewModels
                 return;
             }
 
-            var myEvents = (List<Event>)response.Result;
+            this.myEvents = (List<Event>)response.Result;
             this.events = new ObservableCollection<Event>(myEvents);
         }
+
+        public void AddEventsToList(Event @event)
+        {
+            this.myEvents.Add(@event);
+            this.events = new ObservableCollection<Event>(myEvents);
+        }
+
+        public void DeleteEventList(int IdEvent)
+        {
+            var previousEvent = this.myEvents.Where(p => p.Id == IdEvent).FirstOrDefault();
+            if (previousEvent != null)
+            {
+                this.myEvents.Remove(previousEvent);
+            }
+
+            this.events = new ObservableCollection<Event>(myEvents);
+        }
+
+        public void UpdateEventList(Event @event)
+        {
+            var previousReference = this.myEvents.Where(p => p.Id == @event.Id).FirstOrDefault();
+            if (previousReference != null)
+            {
+                this.myEvents.Remove(previousReference);
+            }
+
+            this.myEvents.Add(@event);
+            this.events = new ObservableCollection<Event>(myEvents);
+        }
+
+
     }
 }
 
