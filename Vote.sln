@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28531.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.Common", "Vote.Common\Vote.Common.csproj", "{8E64B06F-8304-41D8-A514-BB6CB62E736F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vote.Common", "Vote.Common\Vote.Common.csproj", "{8E64B06F-8304-41D8-A514-BB6CB62E736F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{CC506170-326B-4AD4-B3B0-69680ED71668}"
 EndProject
@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classic", "Classic", "{43F3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{8D88C696-8873-4778-B528-66A54116B9FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.Web", "Vote.Web\Vote.Web.csproj", "{AF22C28E-A414-4B73-A36A-0042F188D9DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vote.Web", "Vote.Web\Vote.Web.csproj", "{AF22C28E-A414-4B73-A36A-0042F188D9DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.UIForms.Android", "Vote.UIForms\Vote.UIForms.Android\Vote.UIForms.Android.csproj", "{05E8047C-8389-4F76-8F87-32441620E266}"
 EndProject
@@ -26,6 +26,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.UIClassic.Android", "Vote.UIClassic.Android\Vote.UIClassic.Android.csproj", "{2982120C-6916-42B8-936F-C59E0AC86085}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.UIClassic.iOS", "Vote.UIClassic.iOS\Vote.UIClassic.iOS.csproj", "{3F129D6C-F7EA-428C-BC07-FA10B6567CE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MvvmCross", "MvvmCross", "{0FD134E7-FC24-490D-A28F-8FB626CC97E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.UICross.Android", "Vote.UICross.Android\Vote.UICross.Android.csproj", "{75119A15-F772-4A3B-86DC-C947F1188AB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vote.UICross.iOS", "Vote.UICross.iOS\Vote.UICross.iOS.csproj", "{7197BF15-9A84-43F4-9C15-63A1A2FE3245}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +147,34 @@ Global
 		{3F129D6C-F7EA-428C-BC07-FA10B6567CE9}.Release|iPhone.Build.0 = Release|iPhone
 		{3F129D6C-F7EA-428C-BC07-FA10B6567CE9}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{3F129D6C-F7EA-428C-BC07-FA10B6567CE9}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhone.Deploy.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhone.Build.0 = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhone.Deploy.0 = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{75119A15-F772-4A3B-86DC-C947F1188AB8}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Debug|iPhone.Build.0 = Debug|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Release|iPhone.ActiveCfg = Release|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Release|iPhone.Build.0 = Release|iPhone
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +189,9 @@ Global
 		{44608259-88F9-4C63-9D84-0AB8208FF9A2} = {43F3C496-5118-4148-904C-9CBDEB78570B}
 		{2982120C-6916-42B8-936F-C59E0AC86085} = {43F3C496-5118-4148-904C-9CBDEB78570B}
 		{3F129D6C-F7EA-428C-BC07-FA10B6567CE9} = {43F3C496-5118-4148-904C-9CBDEB78570B}
+		{0FD134E7-FC24-490D-A28F-8FB626CC97E1} = {CC506170-326B-4AD4-B3B0-69680ED71668}
+		{75119A15-F772-4A3B-86DC-C947F1188AB8} = {0FD134E7-FC24-490D-A28F-8FB626CC97E1}
+		{7197BF15-9A84-43F4-9C15-63A1A2FE3245} = {0FD134E7-FC24-490D-A28F-8FB626CC97E1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4EFABDB-916F-4589-B39F-D6F45D6F3B4F}
