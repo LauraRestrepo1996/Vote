@@ -12,5 +12,6 @@ namespace Vote.Common.Models.Services
         Task<Response> PutAsync<T>(string urlBase, string servicePrefix, string controller, T model, string tokenType, string accessToken);
         Task<Response> RecoverPasswordAsync(string urlBase, string servicePrefix, string controller, RecoverPasswordRequest recoverPasswordRequest);
         Task<Response> RegisterUserAsync(string urlBase, string servicePrefix, string controller, NewUserRequest newUserRequest);
+        Task<Response> DeleteAsync(string urlBase, string servicePrefix, string controller, long id, string tokenType, string accessToken);
     }
 }
