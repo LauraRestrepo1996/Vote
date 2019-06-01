@@ -21,7 +21,7 @@
     	android:layout_height="wrap_content">
 
     	<ffimageloading.cross.MvxCachedImageView
-        	android:id="@+id/CandidateImageView"
+        	android:id="@+id/candidateImageView"
         	android:layout_width="200dp"
         	android:layout_height="200dp"
         	android:layout_gravity="center"
@@ -50,7 +50,7 @@
         	android:minHeight="25px"/>
 
     	<EditText
-        	android:inputType="numberDecimal"
+        	android:inputType="textEmailAddress"
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
         	local:MvxBind="Text Candidate.Proposal" />
@@ -74,27 +74,20 @@
     	app:layout_constraintRight_toRightOf="parent"
     	android:paddingBottom="10dp">
 
-    	<Button
-        	android:id="@+id/updateButton"
-        	android:text="Update"
-        	android:layout_width="150dp"
-        	android:layout_marginLeft="25dp"
-        	android:layout_height="wrap_content"
-        	android:layout_marginBottom="2dp"
-        	android:background="@drawable/primary_button"
-        	local:MvxBind="Click UpdateCommand"/>
+   
 
-    	<Button
-        	android:id="@+id/deleteButton"
-        	android:text="Delete"
-        	android:layout_width="150dp"
-        	android:layout_height="wrap_content"
-        	android:layout_marginLeft="15dp"
-        	android:layout_marginBottom="2dp"
-        	android:background="@drawable/danger_button"
-        	local:MvxBind="Click DeleteCommand"/>
-
+    
 	</LinearLayout>
+
+    	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginLeft="6dp"
+    	android:layout_marginRight="6dp"
+    	local:layout_constraintTop_toBottomOf="@+id/toolbar_cross"
+    	local:MvxItemTemplate="@layout/candidaterow"
+    	local:MvxBind="ItemsSource Events; ItemClick ItemClickCommand;"/>
+
 
 </android.support.constraint.ConstraintLayout>
 

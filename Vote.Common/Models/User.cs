@@ -60,6 +60,18 @@ namespace Vote.Common.Models
         [JsonProperty("cityId")]
         public int CityId { get; set; }
 
+        [JsonProperty("ocupattion")]
+        public string Ocupattion { get; set; }
+
+        [JsonProperty("gender")]
+        public string gender { get; set; }
+
+        [JsonProperty("stratum")]
+        public string stratum { get; set; }
+
+        [JsonProperty("birthdate")]
+        public DateTime birthdate { get; set; }
+
         public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
 
     }

@@ -10,7 +10,7 @@ namespace Vote.Web.Controllers.API
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Vote.Common.Models;
-    using Vote.UIForms.Helpers;
+    using Vote.Common.Helpers;
 
     [Route("api/[Controller]")]
     public class AccountController : Controller

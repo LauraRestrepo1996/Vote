@@ -11,6 +11,7 @@ namespace Vote.Common.ViewModels
     using MvvmCross.ViewModels;
     using Models.Services;
     using System;
+    using Vote.Common.Helpers;
 
     public class RegisterViewModel : MvxViewModel
     {
@@ -33,7 +34,7 @@ namespace Vote.Common.ViewModels
         private string occupation;
         private string stratum;
         private string confirmPassword;
-
+        private bool isLoading;
 
         public RegisterViewModel(
             IMvxNavigationService navigationService,
@@ -44,6 +45,7 @@ namespace Vote.Common.ViewModels
             this.navigationService = navigationService;
             this.dialogService = dialogService;
             this.LoadCountries();
+            this.IsLoading = false;
         }
 
         public ICommand RegisterCommand
@@ -65,6 +67,13 @@ namespace Vote.Common.ViewModels
         {
             get => this.lastName;
             set => this.SetProperty(ref this.lastName, value);
+        }
+        
+
+        public bool IsLoading
+        {
+            get => this.isLoading;
+            set => this.SetProperty(ref this.isLoading, value);
         }
 
         public string Email
@@ -159,11 +168,12 @@ namespace Vote.Common.ViewModels
 
         private async void LoadCountries()
         {
+            this.IsLoading = true;
             var response = await this.apiService.GetListAsync<Country>(
                 "https://shopzulu.azurewebsites.net",
                 "/api",
                 "/Countries");
-
+            this.IsLoading = false;
             if (!response.IsSuccess)
             {
                 this.dialogService.Alert("Error", response.Message, "Accept");
@@ -175,7 +185,86 @@ namespace Vote.Common.ViewModels
 
         private async void RegisterUser()
         {
-            // TODO: Make the local validations
+            if (string.IsNullOrEmpty(this.FirstName))
+            {
+                this.dialogService.Alert("Error", "You must enter a first name.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.LastName))
+            {
+                this.dialogService.Alert("Error", "You must enter a last name.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Email))
+            {
+                this.dialogService.Alert("Error", "You must enter an email.", "Accept");
+                return;
+            }
+
+            if (!RegexHelper.IsValidEmail(this.Email))
+            {
+                this.dialogService.Alert("Error", "You must enter a valid email.", "Accept");
+                return;
+            }
+
+
+            if (string.IsNullOrEmpty(this.Phone))
+            {
+                this.dialogService.Alert("Error", "You must enter a phone.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Password))
+            {
+                this.dialogService.Alert("Error", "You must enter a password.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Gender))
+            {
+                this.dialogService.Alert("Error", "You must enter a Gender.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Occupation))
+            {
+                this.dialogService.Alert("Error", "You must enter a Occupation.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.Stratum))
+            {
+                this.dialogService.Alert("Error", "You must enter a Stratum.", "Accept");
+                return;
+            }
+
+            if (this.Birthdate == null)
+            {
+                this.dialogService.Alert("Error", "You must enter a Birthdate.", "Accept");
+                return;
+            }
+            if (this.Password.Length < 6)
+            {
+                this.dialogService.Alert("Error", "The password must be a least 6 characters.", "Accept");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(this.ConfirmPassword))
+            {
+                this.dialogService.Alert("Error", "You must enter a pasword confirm.", "Accept");
+                return;
+            }
+
+            if (!this.Password.Equals(this.ConfirmPassword))
+            {
+                this.dialogService.Alert("Error", "The pasword and confirm does not math.", "Accept");
+                return;
+            }
+
+            this.IsLoading = true;
+
             var request = new NewUserRequest
             {
 
@@ -193,16 +282,28 @@ namespace Vote.Common.ViewModels
             };
 
             var response = await this.apiService.RegisterUserAsync(
-                "https://shopzulu.azurewebsites.net",
+                "https://votemunnoz.azurewebsites.net",
                 "/api",
                 "/Account",
                 request);
 
-            this.dialogService.Alert("Ok", "The user was created succesfully, you must " +
-                "confirm your user by the email sent to you and then you could login with " +
-                "the email and password entered.", "Accept");
+            this.IsLoading = false;
 
-            await this.navigationService.Close(this);
+            if (!response.IsSuccess)
+            {
+                this.dialogService.Alert("Error", response.Message, "Accept");
+                return;
+            }
+
+
+            this.dialogService.Alert(
+         "Ok",
+         "The user was created succesfully, you must " +
+         "confirm your user by the email sent to you and then you could login with " +
+         "the email and password entered.",
+         "Accept",
+         () => { this.navigationService.Close(this); }); // Delegado, Aim to the funcion
+
         }
 
     }

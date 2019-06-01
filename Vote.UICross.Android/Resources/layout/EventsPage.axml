@@ -13,7 +13,7 @@
 
     	android:layout_margin="16dp"
     	local:layout_anchorGravity="bottom|right|end"
-    	local:MvxBind="Click AddProductCommand" />
+    	local:MvxBind="Click AddEventCommand" />
 
 	<mvvmcross.droid.support.v7.recyclerview.MvxRecyclerView
     	android:layout_width="match_parent"
